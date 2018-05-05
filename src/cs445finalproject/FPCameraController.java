@@ -1,3 +1,17 @@
+/**
+ * *************************************************************
+ * file: Vector3Float.java
+ * author: David Baarns, Joshua Yi, Tim Shannon, Jack Zhang, Brian Bauer
+ * class: CS 445 – Computer Graphics
+ *
+ * assignment: Final Project
+ * date last modified:
+ *
+ * purpose: Creates camera and cube
+ *
+ ***************************************************************
+ */
+
 package cs445finalproject;
 
 import org.lwjgl.util.vector.Vector3f;

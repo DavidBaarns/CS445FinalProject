@@ -1,13 +1,13 @@
 /**
  * *************************************************************
  * file: Vector3Float.java
- * author: David Baarns,
+ * author: David Baarns, Joshua Yi, Tim Shannon, Jack Zhang, Brian Bauer
  * class: CS 445 – Computer Graphics
  *
  * assignment: Final Project
  * date last modified:
  *
- * purpose:
+ * purpose: Initializes the vector positions
  *
  ***************************************************************
  */
