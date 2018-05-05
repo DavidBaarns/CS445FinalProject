@@ -75,18 +75,4 @@ public class cs445FinalProject {
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
 
-    // This method prints instructions, reads the coordinates.txt file,
-    // and handles the logic to color and draw each shape as needed.
-    private void render() throws IOException {
-
-        while (!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-            {
-
-            }
-            Display.update();
-            Display.sync(60);
-        }
-    }
-
-    //Display.destroy();
 }
