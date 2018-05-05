@@ -1,7 +1,7 @@
 /**
  * *************************************************************
  * file: cs445FinalProject.java
- * author: David Baarns,
+ * author: David Baarns, Joshua Yi, Tim Shannon, Jack Zhang, Brian Bauer
  * class: CS 445 – Computer Graphics
  *
  * assignment: Final Project
