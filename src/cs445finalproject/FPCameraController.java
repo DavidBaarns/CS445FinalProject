@@ -107,7 +107,7 @@ public class FPCameraController {
     }
 
     public void gameLoop() {
-        FPCameraController camera = new FPCameraController(0, 0, 0);
+        FPCameraController camera = new FPCameraController(0, 0, -2);
         float dx = 0.0f;
         float dy = 0.0f;
         float dt = 0.0f; //length of frame
@@ -196,7 +196,7 @@ public class FPCameraController {
                 glVertex3f(1.0f, -1.0f, -1.0f);
                 
             //front
-                glColor3f(1.0f, 1.0f, 1.0f);
+                glColor3f(1.0f, 0.0f, 1.0f);
                 glVertex3f(1.0f, 1.0f, 1.0f);
                 glVertex3f(-1.0f, 1.0f, 1.0f);
                 glVertex3f(-1.0f, -1.0f, 1.0f);
@@ -210,7 +210,7 @@ public class FPCameraController {
                 glVertex3f(1.0f, 1.0f, -1.0f);
                 
             //left
-                glColor3f(1.0f, 0.7f, 0.0f);
+                glColor3f(1.0f, 1.0f, 1.0f);
                 glVertex3f(-1.0f, 1.0f, 1.0f);
                 glVertex3f(-1.0f, 1.0f, -1.0f);
                 glVertex3f(-1.0f, -1.0f, -1.0f);
