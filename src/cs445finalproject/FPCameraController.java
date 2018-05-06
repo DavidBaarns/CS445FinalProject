@@ -5,9 +5,11 @@
  * class: CS 445 – Computer Graphics
  *
  * assignment: Final Project
- * date last modified:
+ * date last modified: 5/6/2018
  *
- * purpose: Creates camera and cube
+ * purpose: Creates camera and cube,
+ * creates key bindings to move around
+ * 
  *
  ***************************************************************
  */
