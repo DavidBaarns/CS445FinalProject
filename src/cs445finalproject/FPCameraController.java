@@ -1,6 +1,6 @@
 /**
  * *************************************************************
- * file: Vector3Float.java
+ * file: FPCameraController.java
  * author: David Baarns, Joshua Yi, Tim Shannon, Jack Zhang, Brian Bauer
  * class: CS 445 – Computer Graphics
  *
@@ -13,10 +13,9 @@
  *
  ***************************************************************
  */
+ 
+//package openglapp;
 
-package cs445finalproject;
-
-import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -26,18 +25,18 @@ import org.lwjgl.Sys;
 public class FPCameraController {
 
     //3d vector to store the camera's position in
-    private Vector3f position = null;
-    private Vector3f lPosition = null;
+    private Vector3Float position = null;
+    private Vector3Float lPosition = null;
     //the rotation around the Y axis of the camera
     private float yaw = 0.0f;
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
-    private Vector3Float me;
-
+    private Chunk c = new Chunk(0,0,0);
+	
     public FPCameraController(float x, float y, float z) {
         //instantiate position Vector3f to the x y z params.
-        position = new Vector3f(x, y, z);
-        lPosition = new Vector3f(x, y, z);
+        position = new Vector3Float(x, y, z);
+        lPosition = new Vector3Float(x, y, z);
         lPosition.x = 0f;
         lPosition.y = 15f;
         lPosition.z = 0f;
@@ -118,10 +117,10 @@ public class FPCameraController {
         float mouseSensitivity = 0.09f;
         float movementSpeed = .35f;
         //hide the mouse
-        Mouse.setGrabbed(true);
+        Mouse.setGrabbed(true);	
+        
         // keep looping till the display window is closed the ESC key is down
-        while (!Display.isCloseRequested()
-                && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+        while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
             time = Sys.getTime();
             lastTime = time;
             //distance in mouse movement
@@ -169,7 +168,7 @@ public class FPCameraController {
             camera.lookThrough();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             //you would draw your scene here.
-            render();
+            c.render();
             //draw the buffer to the screen
             Display.update();
             Display.sync(60);
@@ -178,57 +177,15 @@ public class FPCameraController {
     }
 
     private void render() {
-        try {
-            glEnable(GL_DEPTH_TEST);
-            glDepthFunc(GL_LEQUAL);
+        try{
             glBegin(GL_QUADS);
-            
-            //top
-                glColor3f(0.0f, 0.0f, 1.0f);
-                glVertex3f(1.0f, 1.0f, -1.0f);
-                glVertex3f(-1.0f, 1.0f, -1.0f);
-                glVertex3f(-1.0f, 1.0f, 1.0f);
-                glVertex3f(1.0f, 1.0f, 1.0f);
-            
-            //bottom
-                glColor3f(0.0f, 1.0f, 0.0f);
-                glVertex3f(1.0f, -1.0f, 1.0f);
-                glVertex3f(-1.0f, -1.0f, 1.0f);
-                glVertex3f(-1.0f, -1.0f, -1.0f);
-                glVertex3f(1.0f, -1.0f, -1.0f);
-                
-            //front
-                glColor3f(1.0f, 0.0f, 1.0f);
-                glVertex3f(1.0f, 1.0f, 1.0f);
-                glVertex3f(-1.0f, 1.0f, 1.0f);
-                glVertex3f(-1.0f, -1.0f, 1.0f);
-                glVertex3f(1.0f, -1.0f, 1.0f);
-                
-            //back
-                glColor3f(1.0f, 1.0f, 0.0f);
-                glVertex3f(1.0f, -1.0f, -1.0f);
-                glVertex3f(-1.0f, -1.0f, -1.0f);
-                glVertex3f(-1.0f, 1.0f, -1.0f);
-                glVertex3f(1.0f, 1.0f, -1.0f);
-                
-            //left
-                glColor3f(1.0f, 1.0f, 1.0f);
-                glVertex3f(-1.0f, 1.0f, 1.0f);
-                glVertex3f(-1.0f, 1.0f, -1.0f);
-                glVertex3f(-1.0f, -1.0f, -1.0f);
-                glVertex3f(-1.0f, -1.0f, 1.0f);
-                
-            //right
-                glColor3f(1.0f, 0.0f, 0.0f);
-                glVertex3f(1.0f, 1.0f, -1.0f);
-                glVertex3f(1.0f, 1.0f, 1.0f);
-                glVertex3f(1.0f, -1.0f, 1.0f);
-                glVertex3f(1.0f, -1.0f, -1.0f);
-                
+            glColor3f(2.0f,0.0f,2.0f);
+            glVertex3f( 1.0f,-2.0f,-1.0f);
+            glVertex3f(-1.0f,-2.0f,-1.0f);
+            glVertex3f(-1.0f, 2.0f,-1.0f);
+            glVertex3f( 1.0f, 2.0f,-1.0f);
             glEnd();
-        } catch (Exception e) {
         }
+    catch(Exception e){}
     }
 }
-
-
