@@ -25,7 +25,6 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-//Chunk class stores block vertices in order to render them more efficiently
 public class Chunk {
     static final int CHUNK_SIZE = 30;
     static final int CUBE_LENGTH = 2;
@@ -41,8 +40,6 @@ public class Chunk {
     private int StartX, StartY, StartZ;
     private Random r;
 
-    //Method: render
-    //Purpose: renders the chunks
     public void render() {
         glPushMatrix();
         glPushMatrix();
@@ -57,8 +54,6 @@ public class Chunk {
         glPopMatrix();
     }
 
-    //Method: rebuildMest
-    //Purpose: Primary method for generating terrain with simplex noise and drawing the chunk
     public void rebuildMesh(float startX, float startY, float startZ) {
         Random random = new Random();
         int sandXMin = random.nextInt(15);
