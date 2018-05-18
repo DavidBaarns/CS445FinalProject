@@ -1,3 +1,5 @@
+package cs445finalproject;
+
 //package openglapp;
 
 import java.awt.Color;

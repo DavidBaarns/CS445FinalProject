@@ -155,7 +155,7 @@ public class FPCameraController {
             {
                 camera.moveUp(movementSpeed);
             }
-            if (Keyboard.isKeyDown(Keyboard.KEY_N))//move up {
+            if (Keyboard.isKeyDown(Keyboard.KEY_R))//Random {
             {
                 c = new Chunk(0, 0, 0);
             }
