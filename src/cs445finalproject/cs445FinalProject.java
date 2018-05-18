@@ -10,7 +10,7 @@
  * purpose: Create openGL window and render 
  *
  * ADDITIONAL FEATURES
- * Press N to spawn new random chunk
+ * Press R to spawn new random chunk
  ***************************************************************
  */
 package cs445finalproject;
