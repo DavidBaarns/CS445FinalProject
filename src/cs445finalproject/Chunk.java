@@ -14,7 +14,7 @@
  ***************************************************************
  */
 
-package finalproject;
+package cs445finalproject;
 
 import java.nio.FloatBuffer;
 import java.util.Random;
@@ -42,7 +42,7 @@ public class Chunk {
 
     public void render() {
         glPushMatrix();
-        glPushMatrix();
+        //glPushMatrix();
         glBindBuffer(GL_ARRAY_BUFFER, VBOVertexHandle);
         glVertexPointer(3, GL_FLOAT, 0, 0L);
         glBindBuffer(GL_ARRAY_BUFFER, VBOColorHandle);
@@ -414,7 +414,7 @@ public class Chunk {
 
     public Chunk(int startX, int startY, int startZ) {
         try{
-            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("terrain.png"));
+            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("cs445finalproject/terrain.png"));
         } catch(Exception e){System.out.print("ER-ROAR!");}
 
         r = new Random();
