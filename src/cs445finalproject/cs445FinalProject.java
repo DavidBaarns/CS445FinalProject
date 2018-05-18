@@ -7,7 +7,7 @@
  * assignment: Final Project
  * date last modified: 5/6/2018
  *
- * purpose: Create openGL window and render 
+ * purpose: Create openGL window and render
  *
  * ADDITIONAL FEATURES
  * Press R to spawn new random chunk
@@ -23,25 +23,33 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.glu.GLU;
+import java.nio.FloatBuffer;
 
 public class cs445FinalProject {
+
     private FPCameraController fp;
     private DisplayMode displayMode;
-    
+    private FloatBuffer lightPosition;
+    private FloatBuffer whiteLight;
+
     public static void main(String[] args) {
         cs445FinalProject basic = new cs445FinalProject();
         basic.start();
+
     }
-    
-    // Calls method to create the windows, iniealize openGL,
-    // and render
+
+
+// Calls method to create the windows, iniealize openGL,
+// and render
     public void start() {
         try {
             createWindow();
             initGL();
             fp = new FPCameraController(0f, 0f, 0f);
             fp.gameLoop();//render();
-        } catch (Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Creates the new window and keyboard.
@@ -64,7 +72,8 @@ public class cs445FinalProject {
 
 // Initializes openGL, sets window size and color
     private void initGL() {
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+        glClearColor(0.05f, 0.75f, 0.91f, 0.0f);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glEnable(GL_TEXTURE_2D);
@@ -75,5 +84,7 @@ public class cs445FinalProject {
         GLU.gluPerspective(100.0f, (float) displayMode.getWidth() / (float) displayMode.getHeight(), 0.1f, 300.0f);
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-    }    
+
+       
+    }
 }

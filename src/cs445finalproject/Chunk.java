@@ -39,10 +39,22 @@ public class Chunk {
     private Block[][][] Blocks;
     private int StartX, StartY, StartZ;
     private Random r;
+    
+     private FloatBuffer lightPosition;
+    private FloatBuffer whiteLight;
+
 
     public void render() {
+        initLightArrays();
+        glLight(GL_LIGHT0, GL_POSITION, lightPosition); //sets our light’s position
+        glLight(GL_LIGHT0, GL_SPECULAR, whiteLight);//sets our specular light
+        glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight);//sets our diffuse light
+        glLight(GL_LIGHT0, GL_AMBIENT, whiteLight);//sets our ambient light
+        glEnable(GL_LIGHTING);//enables our lighting
+        glEnable(GL_LIGHT0);//enables light0
+  
+        
         glPushMatrix();
-        //glPushMatrix();
         glBindBuffer(GL_ARRAY_BUFFER, VBOVertexHandle);
         glVertexPointer(3, GL_FLOAT, 0, 0L);
         glBindBuffer(GL_ARRAY_BUFFER, VBOColorHandle);
@@ -52,6 +64,12 @@ public class Chunk {
         glTexCoordPointer(2, GL_FLOAT, 0, 0L);
         glDrawArrays(GL_QUADS, 0, CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE * 24);
         glPopMatrix();
+    }
+     private void initLightArrays() {
+        lightPosition = BufferUtils.createFloatBuffer(4);
+        lightPosition.put(0.0f).put(0.0f).put(-26.0f).put(1.0f).flip();
+        whiteLight = BufferUtils.createFloatBuffer(4);
+        whiteLight.put(3.0f).put(3.0f).put(3.0f).put(0.0f).flip();
     }
 
     public void rebuildMesh(float startX, float startY, float startZ) {
