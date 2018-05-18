@@ -11,6 +11,7 @@
  *
  * ADDITIONAL FEATURES
  * Press R to spawn new random chunk
+ * Press T to spawn new random top layers
  ***************************************************************
  */
 package cs445finalproject;
