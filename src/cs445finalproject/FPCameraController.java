@@ -1,21 +1,18 @@
+package cs445finalproject;
+
 /**
  * *************************************************************
- * file: FPCameraController.java
- * author: David Baarns, Joshua Yi, Tim Shannon, Jack Zhang, Brian Bauer
- * class: CS 445 – Computer Graphics
+ * file: FPCameraController.java author: David Baarns, Joshua Yi, Tim Shannon,
+ * Jack Zhang, Brian Bauer class: CS 445 – Computer Graphics
  *
- * assignment: Final Project
- * date last modified: 5/6/2018
+ * assignment: Final Project date last modified: 5/6/2018
  *
- * purpose: Creates camera and cube,
- * creates key bindings to move around
- * 
+ * purpose: Creates camera and cube, creates key bindings to move around
+ *
  *
  ***************************************************************
  */
- 
 //package openglapp;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -31,8 +28,8 @@ public class FPCameraController {
     private float yaw = 0.0f;
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
-    private Chunk c = new Chunk(0,0,0);
-	
+    private Chunk c = new Chunk(0, 0, 0);
+
     public FPCameraController(float x, float y, float z) {
         //instantiate position Vector3f to the x y z params.
         position = new Vector3Float(x, y, z);
@@ -117,8 +114,8 @@ public class FPCameraController {
         float mouseSensitivity = 0.09f;
         float movementSpeed = .35f;
         //hide the mouse
-        Mouse.setGrabbed(true);	
-        
+        Mouse.setGrabbed(true);
+
         // keep looping till the display window is closed the ESC key is down
         while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
             time = Sys.getTime();
@@ -158,7 +155,10 @@ public class FPCameraController {
             {
                 camera.moveUp(movementSpeed);
             }
-
+            if (Keyboard.isKeyDown(Keyboard.KEY_N))//move up {
+            {
+                c = new Chunk(0, 0, 0);
+            }
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 camera.moveDown(movementSpeed);
             }
@@ -177,15 +177,15 @@ public class FPCameraController {
     }
 
     private void render() {
-        try{
+        try {
             glBegin(GL_QUADS);
-            glColor3f(2.0f,0.0f,2.0f);
-            glVertex3f( 1.0f,-2.0f,-1.0f);
-            glVertex3f(-1.0f,-2.0f,-1.0f);
-            glVertex3f(-1.0f, 2.0f,-1.0f);
-            glVertex3f( 1.0f, 2.0f,-1.0f);
+            glColor3f(2.0f, 0.0f, 2.0f);
+            glVertex3f(1.0f, -2.0f, -1.0f);
+            glVertex3f(-1.0f, -2.0f, -1.0f);
+            glVertex3f(-1.0f, 2.0f, -1.0f);
+            glVertex3f(1.0f, 2.0f, -1.0f);
             glEnd();
+        } catch (Exception e) {
         }
-    catch(Exception e){}
     }
 }
