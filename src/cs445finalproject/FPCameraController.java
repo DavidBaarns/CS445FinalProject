@@ -159,6 +159,11 @@ public class FPCameraController {
             {
                 c = new Chunk(0, 0, 0);
             }
+            if (Keyboard.isKeyDown(Keyboard.KEY_T))//Random Top {
+            {
+                c.rebuildMesh(0, 0, 0);
+                
+            }
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 camera.moveDown(movementSpeed);
             }
@@ -178,6 +183,7 @@ public class FPCameraController {
 
     private void render() {
         try {
+            //glEnable(GL_DEPTH_TEST);
             glBegin(GL_QUADS);
             glColor3f(2.0f, 0.0f, 2.0f);
             glVertex3f(1.0f, -2.0f, -1.0f);
