@@ -105,7 +105,7 @@ public class FPCameraController {
     }
 
     public void gameLoop() {
-        FPCameraController camera = new FPCameraController(0, 0, -2);
+        FPCameraController camera = new FPCameraController(20, -70, -2);
         float dx = 0.0f;
         float dy = 0.0f;
         float dt = 0.0f; //length of frame
