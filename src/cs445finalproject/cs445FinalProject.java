@@ -9,6 +9,8 @@
  *
  * purpose: Create openGL window and render 
  *
+ * ADDITIONAL FEATURES
+ * Press N to spawn new random chunk
  ***************************************************************
  */
 package cs445finalproject;
@@ -22,29 +24,23 @@ import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.glu.GLU;
 
 public class cs445FinalProject {
-
-    private FPCameraController fp = new FPCameraController(0f, 0f, 0f);
+    private FPCameraController fp;
     private DisplayMode displayMode;
-
+    
     public static void main(String[] args) {
-
         cs445FinalProject basic = new cs445FinalProject();
-
         basic.start();
-
     }
-
+    
     // Calls method to create the windows, iniealize openGL,
     // and render
     public void start() {
         try {
             createWindow();
             initGL();
+            fp = new FPCameraController(0f, 0f, 0f);
             fp.gameLoop();//render();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        } catch (Exception e){e.printStackTrace();}
     }
 
     // Creates the new window and keyboard.
@@ -70,9 +66,13 @@ public class cs445FinalProject {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
+        glEnable(GL_TEXTURE_2D);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnable(GL_DEPTH_TEST);
         GLU.gluPerspective(100.0f, (float) displayMode.getWidth() / (float) displayMode.getHeight(), 0.1f, 300.0f);
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-    }
-
+    }    
 }
