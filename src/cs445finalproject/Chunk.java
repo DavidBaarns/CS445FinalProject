@@ -14,7 +14,7 @@
  ***************************************************************
  */
 
-//package openglapp;
+package finalproject;
 
 import java.nio.FloatBuffer;
 import java.util.Random;
@@ -28,8 +28,8 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Chunk {
     static final int CHUNK_SIZE = 30;
     static final int CUBE_LENGTH = 2;
-    static final float persistanceMin = 0.08f;
-    static final float persistanceMax = 0.09f;
+    static final float persistenceMin = 0.04f;
+    static final float persistenceMax = 0.12f;
 
     private int VBOVertexHandle;
     private int VBOTextureHandle;
@@ -66,14 +66,12 @@ public class Chunk {
         int waterZMin = random.nextInt(15);
         int waterZMax = random.nextInt(15) + 15;
         
-        float persistance = 0;
-        
-        while (persistance < persistanceMin) 
-            persistance = (persistanceMax) * random.nextFloat();
-        
+        float persistence = 0;
+        persistence = (random.nextFloat() % persistenceMax) + persistenceMin;
+		  
         int seed = (int) (50 * random.nextFloat());
 
-        SimplexNoise noise = new SimplexNoise(CHUNK_SIZE, persistance, seed);
+        SimplexNoise noise = new SimplexNoise(CHUNK_SIZE, persistence, seed);
 
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
@@ -87,7 +85,7 @@ public class Chunk {
             for (float z = 0; z < CHUNK_SIZE; z++) {
                 for (float y = 0; y < CHUNK_SIZE; y++) {
                     //generate height from simplex noise
-                    int height = (int) (startY + Math.abs((int) (CHUNK_SIZE * noise.getNoise((int) x, (int) z)))*CUBE_LENGTH) + 10;
+                    int height = (int) (startY + Math.abs((int) (CHUNK_SIZE * noise.getNoise((int) x, (int) z)))*CUBE_LENGTH) + 15;
                     
                     if (y >= height)
                         break;
