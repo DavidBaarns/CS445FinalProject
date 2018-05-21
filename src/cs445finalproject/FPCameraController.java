@@ -24,11 +24,12 @@ public class FPCameraController {
     //3d vector to store the camera's position in
     private Vector3Float position = null;
     private Vector3Float lPosition = null;
+    private int CHUNK_SIZE = 30;
     //the rotation around the Y axis of the camera
     private float yaw = 0.0f;
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
-    private Chunk c = new Chunk(0, 0, 0);
+    private Chunk c = new Chunk(0, 0, 0, CHUNK_SIZE);
 
     public FPCameraController(float x, float y, float z) {
         //instantiate position Vector3f to the x y z params.
@@ -157,14 +158,38 @@ public class FPCameraController {
             }
             if (Keyboard.isKeyDown(Keyboard.KEY_R))//Random {
             {
-               // c = null;
-               // System.gc();
-                c = new Chunk(0, 0, 0);
+                c = null;
+                System.gc();
+                c = new Chunk(0, 0, 0, CHUNK_SIZE);
             }
             if (Keyboard.isKeyDown(Keyboard.KEY_T))//Random Top {
             {
 
                 c.rebuildMesh(0, 0, 0);
+
+            }
+            if (Keyboard.isKeyDown(Keyboard.KEY_EQUALS))//Increase Chunk Size {
+            {
+                if (CHUNK_SIZE == 120) {
+                    System.out.println("Maximum chunk size");
+                } else {
+                    c = null;
+                    System.gc();
+                    CHUNK_SIZE += 30;
+                    c = new Chunk(0, 0, 0, CHUNK_SIZE);
+                }
+
+            }
+            if (Keyboard.isKeyDown(Keyboard.KEY_MINUS))//Decrease Chunk Size {
+            {
+                if (CHUNK_SIZE == 30) {
+                    System.out.println("Already at the minimum chunk size");
+                } else {
+                    c = null;
+                    System.gc();
+                    CHUNK_SIZE -= 30;
+                    c = new Chunk(0, 0, 0, CHUNK_SIZE);
+                }
 
             }
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {

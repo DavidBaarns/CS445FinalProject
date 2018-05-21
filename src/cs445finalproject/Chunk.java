@@ -26,7 +26,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Chunk {
 
-    static final int CHUNK_SIZE = 30;
+    static int CHUNK_SIZE;
     static final int CUBE_LENGTH = 2;
     static final float persistenceMin = 0.04f;
     static final float persistenceMax = 0.12f;
@@ -548,7 +548,9 @@ public class Chunk {
         return new float[]{1, 1, 1};
     }
 
-    public Chunk(int startX, int startY, int startZ) {
+    public Chunk(int startX, int startY, int startZ, int size) {
+        CHUNK_SIZE = size;
+        
         try {
             texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("cs445finalproject/terrain.png"));
         } catch (Exception e) {

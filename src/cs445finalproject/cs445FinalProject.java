@@ -12,6 +12,8 @@
  * ADDITIONAL FEATURES
  * Press R to spawn new random chunk
  * Press T to spawn new random top layers
+ * Press +/= key to increase chunk size by 30
+ * Press -/_ key to decrease chunk size by 30
  ***************************************************************
  */
 package cs445finalproject;
