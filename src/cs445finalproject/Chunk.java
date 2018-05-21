@@ -83,9 +83,9 @@ public class Chunk {
         int sandZMax = random.nextInt(15) + 100;
 
         int waterXMin = random.nextInt(15);
-        int waterXMax = random.nextInt(15) + 50;
+        int waterXMax = random.nextInt(15) + 75;
         int waterZMin = random.nextInt(15);
-        int waterZMax = random.nextInt(15) + 50;
+        int waterZMax = random.nextInt(15) + 75;
 
         float persistence = 0;
         persistence = (random.nextFloat() % persistenceMax) + persistenceMin;
@@ -114,7 +114,8 @@ public class Chunk {
                     if (y == 0) {
                         Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Bedrock);
                     }
-                    if (y>=14 && y< height-1){
+                    if (y>=14 && y< height-1 && y>0){
+                        
                         Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Dirt);
                     }
                     // Top layer. Decide between water, grass, and sand
