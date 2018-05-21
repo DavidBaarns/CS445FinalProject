@@ -157,12 +157,15 @@ public class FPCameraController {
             }
             if (Keyboard.isKeyDown(Keyboard.KEY_R))//Random {
             {
+               // c = null;
+               // System.gc();
                 c = new Chunk(0, 0, 0);
             }
             if (Keyboard.isKeyDown(Keyboard.KEY_T))//Random Top {
             {
+
                 c.rebuildMesh(0, 0, 0);
-                
+
             }
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 camera.moveDown(movementSpeed);

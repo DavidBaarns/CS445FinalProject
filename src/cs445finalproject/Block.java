@@ -28,7 +28,9 @@ public class Block {
 		BlockType_Water(2),
 		BlockType_Dirt(3),
 		BlockType_Stone(4),
-		BlockType_Bedrock(5); // [DEFAULT]
+		BlockType_Bedrock(5), // [DEFAULT]
+                BlockType_Lapis(6),
+                BlockType_Gold(7);
 		private int BlockID;
 		BlockType(int i){ BlockID = i;}
 		public int GetID(){return BlockID;}

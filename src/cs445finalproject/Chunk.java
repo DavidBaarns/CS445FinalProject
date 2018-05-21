@@ -71,6 +71,10 @@ public class Chunk {
         whiteLight.put(3.0f).put(3.0f).put(3.0f).put(0.0f).flip();
     }
 
+    public void delete() {
+
+    }
+
     public void rebuildMesh(float startX, float startY, float startZ) {
         Random random = new Random();
         int sandXMin = random.nextInt(15);
@@ -329,7 +333,7 @@ public class Chunk {
                     x + offset * 0, y + offset * 2};
             }
 
-            case 5: {	// Bedrock [Default]
+            case 5: {	// Bedrock 
                 return new float[]{
                     // BOTTOM QUAD(DOWN=+Y)
                     x + offset * 1, y + offset * 1,
@@ -362,7 +366,72 @@ public class Chunk {
                     x + offset * 2, y + offset * 2,
                     x + offset * 1, y + offset * 2};
             }
-
+            case 6: { // Lapis Stone
+                return new float[]{
+                    //
+                    x + offset * 1, y + offset * 10,
+                    x + offset * 0, y + offset * 10,
+                    x + offset * 0, y + offset * 11,
+                    x + offset * 1, y + offset * 11,
+                    //
+                    x + offset * 1, y + offset * 10,
+                    x + offset * 0, y + offset * 10,
+                    x + offset * 0, y + offset * 11,
+                    x + offset * 1, y + offset * 11,
+                    //  
+                    x + offset * 1, y + offset * 10,
+                    x + offset * 0, y + offset * 10,
+                    x + offset * 0, y + offset * 11,
+                    x + offset * 1, y + offset * 11,
+                    //
+                    x + offset * 1, y + offset * 10,
+                    x + offset * 0, y + offset * 10,
+                    x + offset * 0, y + offset * 11,
+                    x + offset * 1, y + offset * 11,
+                    //
+                    x + offset * 1, y + offset * 10,
+                    x + offset * 0, y + offset * 10,
+                    x + offset * 0, y + offset * 11,
+                    x + offset * 1, y + offset * 11,
+                    //
+                    x + offset * 1, y + offset * 10,
+                    x + offset * 0, y + offset * 10,
+                    x + offset * 0, y + offset * 11,
+                    x + offset * 1, y + offset * 11,};
+            }
+            case 7: { // Gold
+                return new float[]{
+                    //
+                    x + offset * 1, y + offset * 2,
+                    x + offset * 0, y + offset * 2,
+                    x + offset * 0, y + offset * 3,
+                    x + offset * 1, y + offset * 3,
+                    //
+                    x + offset * 1, y + offset * 2,
+                    x + offset * 0, y + offset * 2,
+                    x + offset * 0, y + offset * 3,
+                    x + offset * 1, y + offset * 3,
+                    //
+                    x + offset * 1, y + offset * 2,
+                    x + offset * 0, y + offset * 2,
+                    x + offset * 0, y + offset * 3,
+                    x + offset * 1, y + offset * 3,
+                    //
+                    x + offset * 1, y + offset * 2,
+                    x + offset * 0, y + offset * 2,
+                    x + offset * 0, y + offset * 3,
+                    x + offset * 1, y + offset * 3,
+                    //
+                    x + offset * 1, y + offset * 2,
+                    x + offset * 0, y + offset * 2,
+                    x + offset * 0, y + offset * 3,
+                    x + offset * 1, y + offset * 3,
+                    //
+                    x + offset * 1, y + offset * 2,
+                    x + offset * 0, y + offset * 2,
+                    x + offset * 0, y + offset * 3,
+                    x + offset * 1, y + offset * 3,};
+                }
             default: {	// Bedrock [Default]
                 return new float[]{
                     // BOTTOM QUAD(DOWN=+Y)
@@ -478,11 +547,16 @@ public class Chunk {
 //                    else{
 //                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Bedrock);
 //                    }
-                    if (temp > 0.5f) {
+                    if (temp > 0.45) {
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
-                    } else {
+                    } else if (temp > 0.1) {
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
 
+                    } else if(temp>0.05){
+                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Lapis);
+                    }
+                    else if(temp>=0){
+                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Gold);
                     }
                 }
             }
