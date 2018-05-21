@@ -160,6 +160,7 @@ public class FPCameraController {
             {
                 c = null;
                 System.gc();
+                System.runFinalization ();
                 c = new Chunk(0, 0, 0, CHUNK_SIZE);
             }
             if (Keyboard.isKeyDown(Keyboard.KEY_T))//Random Top {
@@ -175,6 +176,7 @@ public class FPCameraController {
                 } else {
                     c = null;
                     System.gc();
+                    System.runFinalization ();
                     CHUNK_SIZE += 30;
                     c = new Chunk(0, 0, 0, CHUNK_SIZE);
                 }
@@ -187,6 +189,7 @@ public class FPCameraController {
                 } else {
                     c = null;
                     System.gc();
+                    System.runFinalization ();
                     CHUNK_SIZE -= 30;
                     c = new Chunk(0, 0, 0, CHUNK_SIZE);
                 }
