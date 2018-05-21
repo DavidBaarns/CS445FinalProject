@@ -432,38 +432,71 @@ public class Chunk {
                     x + offset * 0, y + offset * 3,
                     x + offset * 1, y + offset * 3,};
                 }
-            default: {	// Bedrock [Default]
+            case 8: { // Diamond
+                return new float[]{
+                    //
+                    x + offset * 3, y + offset * 3,
+                    x + offset * 2, y + offset * 3,
+                    x + offset * 2, y + offset * 4,
+                    x + offset * 3, y + offset * 4,
+                    //
+                    x + offset * 3, y + offset * 3,
+                    x + offset * 2, y + offset * 3,
+                    x + offset * 2, y + offset * 4,
+                    x + offset * 3, y + offset * 4,
+                    //
+                    x + offset * 3, y + offset * 3,
+                    x + offset * 2, y + offset * 3,
+                    x + offset * 2, y + offset * 4,
+                    x + offset * 3, y + offset * 4,
+                    //
+                    x + offset * 3, y + offset * 3,
+                    x + offset * 2, y + offset * 3,
+                    x + offset * 2, y + offset * 4,
+                    x + offset * 3, y + offset * 4,
+                    //
+                    x + offset * 3, y + offset * 3,
+                    x + offset * 2, y + offset * 3,
+                    x + offset * 2, y + offset * 4,
+                    x + offset * 3, y + offset * 4,
+                    //
+                    x + offset * 3, y + offset * 3,
+                    x + offset * 2, y + offset * 3,
+                    x + offset * 2, y + offset * 4,
+                    x + offset * 3, y + offset * 4,};
+                }
+            default: {	// Dirt [Default]
                 return new float[]{
                     // BOTTOM QUAD(DOWN=+Y)
-                    x + offset * 1, y + offset * 1,
+                    x + offset * 3, y + offset * 1,
                     x + offset * 2, y + offset * 1,
-                    x + offset * 2, y + offset * 2,
-                    x + offset * 1, y + offset * 2,
+                    x + offset * 2, y + offset * 0,
+                    x + offset * 3, y + offset * 0,
                     // TOP!
-                    x + offset * 1, y + offset * 1,
+                    x + offset * 3, y + offset * 1,
                     x + offset * 2, y + offset * 1,
-                    x + offset * 2, y + offset * 2,
-                    x + offset * 1, y + offset * 2,
+                    x + offset * 2, y + offset * 0,
+                    x + offset * 3, y + offset * 0,
                     // FRONT QUAD
-                    x + offset * 1, y + offset * 1,
+                    x + offset * 3, y + offset * 1,
                     x + offset * 2, y + offset * 1,
-                    x + offset * 2, y + offset * 2,
-                    x + offset * 1, y + offset * 2,
+                    x + offset * 2, y + offset * 0,
+                    x + offset * 3, y + offset * 0,
                     // BACK QUAD
-                    x + offset * 1, y + offset * 1,
+                    x + offset * 3, y + offset * 1,
                     x + offset * 2, y + offset * 1,
-                    x + offset * 2, y + offset * 2,
-                    x + offset * 1, y + offset * 2,
+                    x + offset * 2, y + offset * 0,
+                    x + offset * 3, y + offset * 0,
                     // LEFT QUAD
-                    x + offset * 1, y + offset * 1,
+                    x + offset * 3, y + offset * 1,
                     x + offset * 2, y + offset * 1,
-                    x + offset * 2, y + offset * 2,
-                    x + offset * 1, y + offset * 2,
+                    x + offset * 2, y + offset * 0,
+                    x + offset * 3, y + offset * 0,
                     // RIGHT QUAD
-                    x + offset * 1, y + offset * 1,
+                    x + offset * 3, y + offset * 1,
                     x + offset * 2, y + offset * 1,
-                    x + offset * 2, y + offset * 2,
-                    x + offset * 1, y + offset * 2};
+                    x + offset * 2, y + offset * 0,
+                    x + offset * 3, y + offset * 0};
             }
         } // End Switch
     }
@@ -555,8 +588,11 @@ public class Chunk {
                     } else if(temp>0.05){
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Lapis);
                     }
-                    else if(temp>=0){
+                    else if(temp>=0.01){
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Gold);
+                    }
+                    else if(temp>=0){
+                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Diamond);
                     }
                 }
             }
