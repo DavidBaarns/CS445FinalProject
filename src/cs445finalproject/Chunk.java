@@ -78,14 +78,14 @@ public class Chunk {
     public void rebuildMesh(float startX, float startY, float startZ) {
         Random random = new Random();
         int sandXMin = random.nextInt(15);
-        int sandXMax = random.nextInt(15) + 15;
+        int sandXMax = random.nextInt(15) + 100;
         int sandZMin = random.nextInt(15);
-        int sandZMax = random.nextInt(15) + 15;
+        int sandZMax = random.nextInt(15) + 100;
 
         int waterXMin = random.nextInt(15);
-        int waterXMax = random.nextInt(15) + 15;
+        int waterXMax = random.nextInt(15) + 50;
         int waterZMin = random.nextInt(15);
-        int waterZMax = random.nextInt(15) + 15;
+        int waterZMax = random.nextInt(15) + 50;
 
         float persistence = 0;
         persistence = (random.nextFloat() % persistenceMax) + persistenceMin;
@@ -114,26 +114,43 @@ public class Chunk {
                     if (y == 0) {
                         Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Bedrock);
                     }
+                    if (y>=14 && y< height-1){
+                        Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Dirt);
+                    }
                     // Top layer. Decide between water, grass, and sand
                     if (y == height - 1) {
-                        r = new Random();
-                        float temp = r.nextFloat();
-                        if (temp > 0.76f) {
-                            Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Sand);
-                        } else if (temp > 0.53f) {
+                        {
+                            if (x >= waterXMin && x <= waterXMax && z >= waterZMin && z <= waterZMax && y == 14) {
+                                Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Water);
+                            } else if (x >= sandXMin && x <= sandXMax && z >= sandZMin && z <= sandZMax && y == 14) {
+                                Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Sand);
+                            }
+                            else{
+                                 Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Grass);
+                            }
 
-                            Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Water);
-                        } else {
-
-                            Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Grass);
+                            
                         }
+
+//                        r = new Random();
+//                        float temp = r.nextFloat();
+//                        if (temp > 0.76f) {
+                        //Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Sand);
+//                        } else if (temp > 0.53f) {
+//
+//                            Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Water);
+//                        } else {
+//
+//                            Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Grass);
+//                        }
                     }
-//                    if (x >= waterXMin && x <= waterXMax && z >= waterZMin && z <= waterZMax && y == 3) {
+                    
+
+//                    if (x >= waterXMin && x <= waterXMax && z >= waterZMin && z <= waterZMax && y == 15) {
 //                        Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Water);
-//                    } else if (x >= sandXMin && x <= sandXMax && z >= sandZMin && z <= sandZMax && y == 3) {
+//                    } else if (x >= sandXMin && x <= sandXMax && z >= sandZMin && z <= sandZMax && y == 15) {
 //                        Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Sand);
 //                    }
-
                     VertexPositionData.put(createCube(-(float) (startX + x * CUBE_LENGTH), (float) (y * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)), -(float) (startZ + z * CUBE_LENGTH)));
 
                     VertexColorData.put(createCubeVertexCol(getCubeColor(
@@ -431,7 +448,7 @@ public class Chunk {
                     x + offset * 0, y + offset * 2,
                     x + offset * 0, y + offset * 3,
                     x + offset * 1, y + offset * 3,};
-                }
+            }
             case 8: { // Diamond
                 return new float[]{
                     //
@@ -464,7 +481,7 @@ public class Chunk {
                     x + offset * 2, y + offset * 3,
                     x + offset * 2, y + offset * 4,
                     x + offset * 3, y + offset * 4,};
-                }
+            }
             default: {	// Dirt [Default]
                 return new float[]{
                     // BOTTOM QUAD(DOWN=+Y)
@@ -550,7 +567,7 @@ public class Chunk {
 
     public Chunk(int startX, int startY, int startZ, int size) {
         CHUNK_SIZE = size;
-        
+
         try {
             texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("cs445finalproject/terrain.png"));
         } catch (Exception e) {
@@ -587,13 +604,11 @@ public class Chunk {
                     } else if (temp > 0.1) {
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
 
-                    } else if(temp>0.05){
+                    } else if (temp > 0.05) {
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Lapis);
-                    }
-                    else if(temp>=0.01){
+                    } else if (temp >= 0.01) {
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Gold);
-                    }
-                    else if(temp>=0){
+                    } else if (temp >= 0) {
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Diamond);
                     }
                 }
