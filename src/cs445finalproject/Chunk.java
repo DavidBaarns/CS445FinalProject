@@ -43,6 +43,8 @@ public class Chunk {
     private FloatBuffer lightPosition;
     private FloatBuffer whiteLight;
 
+    private boolean Hollow;
+
     public void render() {
         initLightArrays();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition); //sets our light’s position
@@ -71,9 +73,7 @@ public class Chunk {
         whiteLight.put(3.0f).put(3.0f).put(3.0f).put(0.0f).flip();
     }
 
-    public void delete() {
-
-    }
+    
 
     public void rebuildMesh(float startX, float startY, float startZ) {
         Random random = new Random();
@@ -114,51 +114,38 @@ public class Chunk {
                     if (y == 0) {
                         Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Bedrock);
                     }
-                    if (y>=14 && y< height-1 && y>0){
-                        
-                        Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Dirt);
-                    }
-                    // Top layer. Decide between water, grass, and sand
-                    if (y == height - 1) {
-                        {
-                            if (x >= waterXMin && x <= waterXMax && z >= waterZMin && z <= waterZMax && y == 14) {
-                                Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Water);
-                            } else if (x >= sandXMin && x <= sandXMax && z >= sandZMin && z <= sandZMax && y == 14) {
-                                Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Sand);
-                            }
-                            else{
-                                 Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Grass);
-                            }
 
-                            
+                    if (checkIfOnEdge(x, y, z, height)) {
+                        if (y >= 14 && y < height - 1 && y > 0) {
+
+                            Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Dirt);
                         }
+                        // Top layer. Decide between water, grass, and sand
+                        if (y == height - 1) {
+                            {
+                                if (x >= waterXMin && x <= waterXMax && z >= waterZMin && z <= waterZMax && y == 14) {
+                                    Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Water);
+                                } else if (x >= sandXMin && x <= sandXMax && z >= sandZMin && z <= sandZMax && y == 14) {
+                                    Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Sand);
+                                } else {
+                                    Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Grass);
+                                }
 
-//                        r = new Random();
-//                        float temp = r.nextFloat();
-//                        if (temp > 0.76f) {
-                        //Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Sand);
-//                        } else if (temp > 0.53f) {
-//
-//                            Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Water);
-//                        } else {
-//
-//                            Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Grass);
-//                        }
+                            }
+
+                        }
                     }
-                    
 
-//                    if (x >= waterXMin && x <= waterXMax && z >= waterZMin && z <= waterZMax && y == 15) {
-//                        Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Water);
-//                    } else if (x >= sandXMin && x <= sandXMax && z >= sandZMin && z <= sandZMax && y == 15) {
-//                        Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Sand);
-//                    }
-                    VertexPositionData.put(createCube(-(float) (startX + x * CUBE_LENGTH), (float) (y * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)), -(float) (startZ + z * CUBE_LENGTH)));
+                    //if ((x == 0 || x == CHUNK_SIZE-1 || y==0) || (z==0 || z==CHUNK_SIZE-1) || (y>=height-1) || (y==height-2 && y>13))  {
+                    if (checkIfOnEdge(x, y, z, height)) {
+                        VertexPositionData.put(createCube(-(float) (startX + x * CUBE_LENGTH), (float) (y * CUBE_LENGTH + (int) (CHUNK_SIZE * .8)), -(float) (startZ + z * CUBE_LENGTH)));
 
-                    VertexColorData.put(createCubeVertexCol(getCubeColor(
-                            Blocks[(int) x][(int) y][(int) z])));
+                        VertexColorData.put(createCubeVertexCol(getCubeColor(
+                                Blocks[(int) x][(int) y][(int) z])));
 
-                    VertexTextureData.put(createTexCube((float) 0,
-                            (float) 0, Blocks[(int) (x)][(int) (y)][(int) (z)]));
+                        VertexTextureData.put(createTexCube((float) 0,
+                                (float) 0, Blocks[(int) (x)][(int) (y)][(int) (z)]));
+                    }
                 }
             }
         }
@@ -566,8 +553,9 @@ public class Chunk {
         return new float[]{1, 1, 1};
     }
 
-    public Chunk(int startX, int startY, int startZ, int size) {
+    public Chunk(int startX, int startY, int startZ, int size, boolean hollow) {
         CHUNK_SIZE = size;
+        Hollow = hollow;
 
         try {
             texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("cs445finalproject/terrain.png"));
@@ -581,37 +569,23 @@ public class Chunk {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int y = 0; y < CHUNK_SIZE; y++) {
                 for (int z = 0; z < CHUNK_SIZE; z++) {
-                    float temp = r.nextFloat();
-//                    if(temp > 0.8f){
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
-//                    }
-//                    else if(temp > 0.6f && (y >= 1 || y <= 5)){
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
-//                    }
-//                    else if(temp > 0.4f  && (y >= 1 || y <= 3)){
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
-//                    }
-//                    else if(temp > 0.2f && (y >= 1 || y <= 6)){
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Water);
-//                    }
-//                    else if(temp > 0.1f && (y == 3 || y <= 10)){
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
-//                    }
-//                    else{
-//                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Bedrock);
-//                    }
-                    if (temp > 0.45) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
-                    } else if (temp > 0.1) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
 
-                    } else if (temp > 0.05) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Lapis);
-                    } else if (temp >= 0.01) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Gold);
-                    } else if (temp >= 0) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Diamond);
+                    float temp = r.nextFloat();
+                    if (checkIfOnEdge(x, y, z, 10)) {
+                        if (temp > 0.45) {
+                            Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
+                        } else if (temp > 0.1) {
+                            Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
+
+                        } else if (temp > 0.05) {
+                            Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Lapis);
+                        } else if (temp >= 0.01) {
+                            Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Gold);
+                        } else if (temp >= 0) {
+                            Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Diamond);
+                        }
                     }
+
                 }
             }
         }
@@ -625,5 +599,19 @@ public class Chunk {
         StartZ = startZ;
 
         rebuildMesh(startX, startY, startZ);
+    }
+
+    private boolean checkIfOnEdge(float x, float y, float z, int height) {
+
+        if (Hollow == true) {
+            if ((x == 0 || x == CHUNK_SIZE - 1 || y == 0) || (z == 0 || z == CHUNK_SIZE - 1) || (y >= height - 1) || (y == height - 2 && y > 13)) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        return true;
     }
 }

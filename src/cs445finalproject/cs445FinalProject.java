@@ -12,8 +12,11 @@
  * ADDITIONAL FEATURES
  * Press R to spawn new random chunk
  * Press T to spawn new random top layers
- * Press +/= key to increase chunk size by 30
- * Press -/_ key to decrease chunk size by 30
+ * Press +/= key to increase chunk size by 30 (Up to 120x120)
+ * Press -/_ key to decrease chunk size by 30 (Down to 30x30)
+ * Press H to toggle Hollow mode. When turned on, the next chunk
+ *      generated (via R key, T, +/= key or -/_ key) will be
+ *      completely hollow.
  ***************************************************************
  */
 package cs445finalproject;

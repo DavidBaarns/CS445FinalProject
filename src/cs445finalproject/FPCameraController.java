@@ -7,7 +7,9 @@ package cs445finalproject;
  *
  * assignment: Final Project date last modified: 5/6/2018
  *
- * purpose: Creates camera and cube, creates key bindings to move around
+ * purpose: Creates camera and cube, creates key bindings to move around,
+ *      Generate random chunks, increase and decrease chunk size,
+ *      toggle hollow chunks
  *
  *
  ***************************************************************
@@ -25,11 +27,12 @@ public class FPCameraController {
     private Vector3Float position = null;
     private Vector3Float lPosition = null;
     private int CHUNK_SIZE = 30;
+    private boolean Hollow = false;
     //the rotation around the Y axis of the camera
     private float yaw = 0.0f;
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
-    private Chunk c = new Chunk(0, 0, 0, CHUNK_SIZE);
+    private Chunk c = new Chunk(0, 0, 0, CHUNK_SIZE, Hollow);
 
     public FPCameraController(float x, float y, float z) {
         //instantiate position Vector3f to the x y z params.
@@ -156,12 +159,15 @@ public class FPCameraController {
             {
                 camera.moveUp(movementSpeed);
             }
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                camera.moveDown(movementSpeed);
+            }
             if (Keyboard.isKeyDown(Keyboard.KEY_R))//Random {
             {
                 c = null;
                 System.gc();
-                System.runFinalization ();
-                c = new Chunk(0, 0, 0, CHUNK_SIZE);
+                System.runFinalization();
+                c = new Chunk(0, 0, 0, CHUNK_SIZE, Hollow);
             }
             if (Keyboard.isKeyDown(Keyboard.KEY_T))//Random Top {
             {
@@ -169,35 +175,47 @@ public class FPCameraController {
                 c.rebuildMesh(0, 0, 0);
 
             }
-            if (Keyboard.isKeyDown(Keyboard.KEY_EQUALS))//Increase Chunk Size {
-            {
-                if (CHUNK_SIZE == 120) {
-                    System.out.println("Maximum chunk size");
-                } else {
-                    c = null;
-                    System.gc();
-                    System.runFinalization ();
-                    CHUNK_SIZE += 30;
-                    c = new Chunk(0, 0, 0, CHUNK_SIZE);
+
+            while (Keyboard.next()) {
+                if (Keyboard.getEventKey() == Keyboard.KEY_H) { // Toggle Hollow mode
+                    if (Keyboard.getEventKeyState()) {
+                        Hollow = !Hollow;
+                        if (Hollow) {
+                            System.out.println("Hollow toggle: [ON] The next generated chunk will be hollow.");
+                        } else {
+                            System.out.println("Hollow toggle: [OFF] The next generated chunk will be filled in.");
+                        }
+                    }
                 }
 
-            }
-            if (Keyboard.isKeyDown(Keyboard.KEY_MINUS))//Decrease Chunk Size {
-            {
-                if (CHUNK_SIZE == 30) {
-                    System.out.println("Already at the minimum chunk size");
-                } else {
-                    c = null;
-                    System.gc();
-                    System.runFinalization ();
-                    CHUNK_SIZE -= 30;
-                    c = new Chunk(0, 0, 0, CHUNK_SIZE);
+                if (Keyboard.getEventKey() == Keyboard.KEY_EQUALS) { //Increase Chunk Size 
+                    if (Keyboard.getEventKeyState()) {
+                        if (CHUNK_SIZE == 120) {
+                            System.out.println("Maximum chunk size");
+                        } else {
+                            c = null;
+                            System.gc();
+                            System.runFinalization();
+                            CHUNK_SIZE += 30;
+                            c = new Chunk(0, 0, 0, CHUNK_SIZE, Hollow);
+                        }
+                    }
                 }
+                if (Keyboard.getEventKey() == Keyboard.KEY_MINUS) {//Decrease Chunk Size {
+                    if (Keyboard.getEventKeyState()) {
+                        if (CHUNK_SIZE == 30) {
+                            System.out.println("Minimum chunk size");
+                        } else {
+                            c = null;
+                            System.gc();
+                            System.runFinalization();
+                            CHUNK_SIZE -= 30;
+                            c = new Chunk(0, 0, 0, CHUNK_SIZE, Hollow);
+                        }
+                    }
+                }
+            }
 
-            }
-            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-                camera.moveDown(movementSpeed);
-            }
             //set the modelview matrix back to the identity
             glLoadIdentity();
             //look through the camera before you draw anything
@@ -209,6 +227,7 @@ public class FPCameraController {
             Display.update();
             Display.sync(60);
         }
+
         Display.destroy();
     }
 
