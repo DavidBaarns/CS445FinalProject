@@ -5,7 +5,7 @@
  * class: CS 445 – Computer Graphics
  *
  * assignment: Final Project
- * date last modified: 5/6/2018
+ * date last modified: 5/29/2018
  *
  * purpose: Creates a Chunk 30 x 30 and determines block types
  * and placement, then renders it.
@@ -46,6 +46,7 @@ public class Chunk {
     private boolean Hollow;
 
     public void render() {
+        
         initLightArrays();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition); //sets our light’s position
         glLight(GL_LIGHT0, GL_SPECULAR, whiteLight);//sets our specular light
@@ -76,16 +77,17 @@ public class Chunk {
     
 
     public void rebuildMesh(float startX, float startY, float startZ) {
+        int num = CHUNK_SIZE/2;
         Random random = new Random();
-        int sandXMin = random.nextInt(15);
-        int sandXMax = random.nextInt(15) + 100;
-        int sandZMin = random.nextInt(15);
-        int sandZMax = random.nextInt(15) + 100;
+        int sandXMin = random.nextInt(num);
+        int sandXMax = random.nextInt(num) + num;
+        int sandZMin = random.nextInt(num);
+        int sandZMax = random.nextInt(num) + num;
 
-        int waterXMin = random.nextInt(15);
-        int waterXMax = random.nextInt(15) + 75;
-        int waterZMin = random.nextInt(15);
-        int waterZMax = random.nextInt(15) + 75;
+        int waterXMin = random.nextInt(num);
+        int waterXMax = random.nextInt(num) + num;
+        int waterZMin = random.nextInt(num);
+        int waterZMax = random.nextInt(num) + num;
 
         float persistence = 0;
         persistence = (random.nextFloat() % persistenceMax) + persistenceMin;
@@ -115,7 +117,7 @@ public class Chunk {
                         Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Bedrock);
                     }
 
-                    if (checkIfOnEdge(x, y, z, height)) {
+                    //if (checkIfOnEdge(x, y, z, height)) {
                         if (y >= 14 && y < height - 1 && y > 0) {
 
                             Blocks[(int) x][(int) y][(int) z] = new Block(Block.BlockType.BlockType_Dirt);
@@ -134,7 +136,7 @@ public class Chunk {
                             }
 
                         }
-                    }
+                    //}
 
                     //if ((x == 0 || x == CHUNK_SIZE-1 || y==0) || (z==0 || z==CHUNK_SIZE-1) || (y>=height-1) || (y==height-2 && y>13))  {
                     if (checkIfOnEdge(x, y, z, height)) {
@@ -571,7 +573,7 @@ public class Chunk {
                 for (int z = 0; z < CHUNK_SIZE; z++) {
 
                     float temp = r.nextFloat();
-                    if (checkIfOnEdge(x, y, z, 10)) {
+                    //if (checkIfOnEdge(x, y, z, 10)) {
                         if (temp > 0.45) {
                             Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
                         } else if (temp > 0.1) {
@@ -584,7 +586,7 @@ public class Chunk {
                         } else if (temp >= 0) {
                             Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Diamond);
                         }
-                    }
+                   // }
 
                 }
             }

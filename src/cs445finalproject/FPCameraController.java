@@ -5,10 +5,12 @@ package cs445finalproject;
  * file: FPCameraController.java author: David Baarns, Joshua Yi, Tim Shannon,
  * Jack Zhang, Brian Bauer class: CS 445 – Computer Graphics
  *
- * assignment: Final Project date last modified: 5/6/2018
+ * assignment: Final Project date last modified: 5/29/2018
  *
- * purpose: Creates camera and cube, creates key bindings to move around,
- *      Generate random chunks, increase and decrease chunk size,
+ * purpose: Creates camera and cube, creates key bindings to:
+ *      move around,
+ *      Generate random chunks, 
+ *      increase and decrease chunk size,
  *      toggle hollow chunks
  *
  *
@@ -33,7 +35,7 @@ public class FPCameraController {
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
     private Chunk c = new Chunk(0, 0, 0, CHUNK_SIZE, Hollow);
-
+    private Chunk d;
     public FPCameraController(float x, float y, float z) {
         //instantiate position Vector3f to the x y z params.
         position = new Vector3Float(x, y, z);
@@ -181,10 +183,12 @@ public class FPCameraController {
                     if (Keyboard.getEventKeyState()) {
                         Hollow = !Hollow;
                         if (Hollow) {
+                           d = c;
                             System.out.println("Hollow toggle: [ON] The next generated chunk will be hollow.");
                         } else {
                             System.out.println("Hollow toggle: [OFF] The next generated chunk will be filled in.");
                         }
+                        
                     }
                 }
 
@@ -215,7 +219,7 @@ public class FPCameraController {
                     }
                 }
             }
-
+            
             //set the modelview matrix back to the identity
             glLoadIdentity();
             //look through the camera before you draw anything
